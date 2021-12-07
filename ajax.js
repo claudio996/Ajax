@@ -5,6 +5,8 @@ p2- asignar los eventos readystatechange, que manipularemos en una callback dond
 p3- establecer el metodo y recuerso que deseamos consumir.
 p4- enviar peticion que vamos a realizar.
 */
+
+/*
 (() => {
     const xhr = new XMLHttpRequest(),
         $xhr = document.getElementById('xhr'); //objeto xmlHTTPrEQUEST
@@ -41,6 +43,41 @@ p4- enviar peticion que vamos a realizar.
 
     xhr.open("GET", "assets/users.json") //abrimos la solictud
     xhr.send() //enviamos.
+
+})
+
+();
+*/
+
+(() => {
+    const $fetch = document.getElementById('fetch'),
+        $fragment = document.createDocumentFragment(); //insertar fragmento almacenado en memoria.
+
+    fetch('https://jsonplaceholder.typicode.com/users')
+
+    .then((respuesta) => respuesta.ok ? //validamos status de la respuesta
+            respuesta.json() : Promise.reject(respuesta)) //de lo contrario rechazamos promesa.
+
+    .then(json => { //validamos su tipo
+        json.forEach(element => {
+            const $li = document.createElement('li');
+            $li.innerHTML = `${element.email} -- ${element.phone}`
+            $fragment.appendChild($li);
+        });
+
+        $fetch.appendChild($fragment);
+    })
+
+    .catch(error => { //manejamos el error.
+        console.log(error);
+        let mensaje = error.statusText || "Ocurrio un error";
+        $fetch.innerHTML = `Error ${error.status}: ${mensaje}`;
+
+    })
+
+    .finally(() => {
+        console.log('terminado');
+    });
 
 })
 
