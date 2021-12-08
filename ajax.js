@@ -48,7 +48,7 @@ p4- enviar peticion que vamos a realizar.
 
 ();
 */
-
+/*
 (() => {
     const $fetch = document.getElementById('fetch'),
         $fragment = document.createDocumentFragment(); //insertar fragmento almacenado en memoria.
@@ -82,3 +82,46 @@ p4- enviar peticion que vamos a realizar.
 })
 
 ();
+*/
+(() => {
+    const d = document;
+    const $lista = d.getElementById('Api-fetch-async-await'),
+        $fragment = d.createDocumentFragment(); //solo insercion a la carga del doc
+
+    async function getData() { //funcion asincrona
+
+        try {
+            let respuesta = await fetch('https://jsonplaceholder.typicode.com/users'), //espera que se lea la promesa
+                json = await respuesta.json(); //espera hasta que lo conviertas en json.
+            //  if (!respuesta.ok) throw new Error('Ocurrio un error al solicitar');
+            if (!respuesta.ok) throw { status: respuesta.status, statusText: respuesta.statusText }
+
+            json.forEach(element => { //dibujamos.
+                const $li = d.createElement('li');
+                $li.innerHTML = `${element.email} -- ${element.name}`
+                $fragment.appendChild($li);
+                console.log($fragment);
+
+            });
+
+            $lista.appendChild($fragment);
+
+
+        } catch (error) { //tomamos los mensajes de error.
+            let mensaje = error.statusText || 'ocurrio un error';
+            $lista.innerHTML = `   ${mensaje} ${error.status}`
+
+        } finally {
+            console.log('final');
+        }
+
+    }
+
+    getData();
+
+
+
+
+})
+
+()
