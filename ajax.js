@@ -88,7 +88,7 @@ p4- enviar peticion que vamos a realizar.
     const $lista = d.getElementById('Api-fetch-async-await'),
         $fragment = d.createDocumentFragment(); //solo insercion a la carga del doc
 
-    async function getData() { //funcion asincrona
+    async function getData() { //funcion asincrona para utilizar async-await.
 
         try {
             let respuesta = await fetch('https://jsonplaceholder.typicode.com/users'), //espera que se lea la promesa
