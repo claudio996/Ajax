@@ -128,7 +128,7 @@ p4- enviar peticion que vamos a realizar.
 
 ()
 */
-
+/*
 (() => {
     const d = document,
         $lista = d.getElementById('axios'),
@@ -156,6 +156,38 @@ p4- enviar peticion que vamos a realizar.
             console.log('Esto se ejecutara independiente del axios');
         })
 
+})
+
+()
+*/
+
+(() => {
+    const d = document,
+        $lista = d.getElementById('axios-async-await'),
+        $fragment = d.createDocumentFragment(); //solo insercion a la carga del doc.
+
+    async function getData() {
+        try {
+            let respuesta = await axios.get('https://jsonplaceholder.typicode.com/users'), //esperamos nuestra peticion, capturamos la promesa.
+                json = await respuesta.data; //espera a que tengamos la data  de la respuesta y capturamos la promesa.
+
+            json.forEach(element => {
+                const $li = d.createElement('li')
+                $li.innerHTML = ` ${element.name}-- ${element.email} -- ${element.phone}`
+                $fragment.appendChild($li);
+            });
+
+            $lista.appendChild($fragment)
+
+        } catch (error) {
+            let mensaje = error.response.statusText || 'ocurrio un error';
+            $lista.innerHTML = `   ${mensaje} ${error.response.status}`
+        } finally {
+            console.log('final');
+        }
+    }
+
+    getData()
 })
 
 ()
