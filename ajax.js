@@ -83,6 +83,8 @@ p4- enviar peticion que vamos a realizar.
 
 ();
 */
+
+/*
 (() => {
     const d = document;
     const $lista = d.getElementById('Api-fetch-async-await'),
@@ -121,6 +123,38 @@ p4- enviar peticion que vamos a realizar.
 
 
 
+
+})
+
+()
+*/
+
+(() => {
+    const d = document,
+        $lista = d.getElementById('axios'),
+        $fragment = d.createDocumentFragment(); //solo insercion a la carga del doc
+
+    axios.get('https://jsonplaceholder.typicode.com/user')
+        .then(respuesta => { // La peticion me devolvera una respuesta. la trabajamos
+            let json = respuesta.data;
+            json.forEach(element => {
+                const $li = d.createElement('li');
+                $li.innerHTML = `${element.email} -- ${element.name}`
+                $fragment.appendChild($li);
+            });
+            $lista.appendChild($fragment)
+        })
+
+    .catch(error => {
+
+            console.log(error.response);
+
+            let mensaje = error.response.statusText || 'ocurrio un error';
+            $lista.innerHTML = `   ${mensaje} ${error.response.status}`
+        })
+        .finally(() => {
+            console.log('Esto se ejecutara independiente del axios');
+        })
 
 })
 
